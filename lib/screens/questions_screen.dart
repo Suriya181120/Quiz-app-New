@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/components/answer_button.dart';
 import 'package:quiz_app/data/questions.dart';
 
@@ -13,9 +14,6 @@ class QuestionsScreen extends StatefulWidget {
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
   var currentQuestionIndex = 0;
-
-  // ignore: prefer_typing_uninitialized_variables, non_constant_identifier_names
-  var GoogleFonts;
 
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer);
