@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/data/java_questions.dart';
 import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/screens/questions_screen.dart';
 import 'package:quiz_app/screens/results_screen.dart';
 import 'package:quiz_app/screens/start_screen.dart';
+import 'package:quiz_app/screens/java_questions_screen.dart'; // <-- Import Java quiz screen
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -38,6 +40,13 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void javaQuiz(String _) {
+    setState(() {
+      selectedAnswers = [];
+      activeScreen = 'java_questions'; // switch to java quiz screen
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget screenWidget = StartScreen(switchScreen);
@@ -47,15 +56,31 @@ class _QuizState extends State<Quiz> {
     }
 
     if (activeScreen == 'results-screen') {
+      String activeQuiz = activeScreen;
       screenWidget = ResultsScreen(
         chosenAnswers: selectedAnswers,
         onRestart: restartQuiz,
+        onOther: javaQuiz,
+        onFlutter: (String _) => restartQuiz(),
+        activeQuiz: activeQuiz,
+        // <-- when clicking this, it goes to java quiz
       );
     }
 
-    // final screenWidget = activeScreen == 'start-screen'
-    //     ? StartScreen(switchScreen)
-    //     : const QuestionsScreen();
+    if (activeScreen == 'java_questions') {
+      screenWidget = JavaQuestionsScreen(
+        // <-- your new Java quiz screen
+        onSelectAnswer: (answer) {
+          selectedAnswers.add(answer);
+
+          if (selectedAnswers.length == javaQuestions.length) {
+            setState(() {
+              activeScreen = 'results-screen';
+            });
+          }
+        },
+      );
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

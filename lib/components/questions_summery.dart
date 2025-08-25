@@ -53,7 +53,7 @@ class QuestionsSummary extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             );
           }).toList(),
